@@ -1,0 +1,35 @@
+<!-- index.html -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content_container %}
+<div class="row">
+	<div class="col-md-12"></div>
+	<div class="col-md-12">
+		
+		{% for i in public_projects %}
+			<div class="thumbnail blocks">
+				<p class="text-right"><i class="fa fa-unlock fa-1x text-success"></i></p>
+				<a href="{{ i.get_absolute_url }}" class="">
+					<img src="{% static 'img/nflrc-logo-square.png'%}">
+				</a>
+				<div class="caption">
+					<p><legend> {{ i }} </legend></p>
+				</div>				
+			</div>
+		{% endfor %}
+	
+		{% for i in member_projects %}
+			<div class="thumbnail blocks">
+				<p class="text-right">{% if not i.public %} <i class="fa fa-lock fa-1x"></i> {% endif %}</p>
+				<a href="{{ i.get_absolute_url }}" class="">
+					<img src="{% static 'img/nflrc-logo-square.png'%}">
+				</a>
+				<div class="caption">
+					<p><legend> {{ i }} </legend></p>
+				</div>				
+			</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock content_container %}

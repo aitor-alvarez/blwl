@@ -1,0 +1,39 @@
+<!-- participants.html -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content_container %}
+
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Participant List for {{ project }}
+			<a href="{% url 'add_participant' project.slug %}" class="btn btn-sm btn-success">+ Participant</a></h3>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="row">
+			<div class="col-md-4">Registered email address</div>
+			<div class="col-md-4">Last login</div>
+			<div class="col-md-4">Edit record</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" id="participant_container">
+	{% for i, j in object_list %} 
+		<div class="col-md-12 participant {{ i.participant_type }} {% if i.site_account.last_login %} active {% endif %}" style="padding: 5px">
+			<div class="col-md-4 email_addr">{{ i.email_addr }}</div>
+				<div class="col-md-4 last_login">{{ i.site_account.last_login }}</div>
+			<div class="col-md-4">
+				{% if user.is_staff %}
+				<a href="{% url 'whitelist_edit' i.pk %}" class="btn btn-xs btn-default"><small>edit</small></a>
+				<a href="{% url 'remove_participant' project.slug j %}" class="btn btn-xs btn-danger"><small>remove membership</small></a>
+				{% endif %}
+			</div>			  
+		</div>
+	{% endfor %}
+	</div>
+
+{% endblock content_container %}
+
+{% block js_include %} <script src="{% static 'js/filtering.js' %}"></script>{% endblock js_include %}
+
